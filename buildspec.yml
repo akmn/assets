@@ -3,6 +3,9 @@ version: 0.2
 env:
   variables:
     TEST_VAR: "Hello"
+  secrets-manager:
+    DB_PASSWORD: "arn:aws:secretsmanager:us-east-1:992382528358:secret:rds!cluster-adc64676-287a-4c8b-8936-1d7b03978209-t0TdFi"
+
 phases:
   build:
     commands:
@@ -15,5 +18,5 @@ phases:
       - goenv install 1.21.7
       - goenv global 1.21.7
       - echo "Connect to DB..."
-      - psql --host=endpoint --port=5432 --dbname=postgres --username=akmn
+      - psql --host=assets-2-instance-1.c52ac2emar8b.us-east-1.rds.amazonaws.com --port=5432 --dbname=postgres --username=akmn --password=$DB_PASSWORD -c "SELECT * FROM reports.cloud_formation_templates"
       - echo "Running deploy..."
