@@ -18,6 +18,7 @@ phases:
       - goenv install 1.21.7
       - goenv global 1.21.7
       - echo "Connect to DB..."
+      - echo "pw is $DB_PASSWORD"
       - export PGPASSWORD=$DB_PASSWORD
-      - psql --host=assets-2-instance-1.c52ac2emar8b.us-east-1.rds.amazonaws.com --port=5432 --dbname=postgres --username=akmn -c "SELECT * FROM reports.cloud_formation_templates"
+      - psql --host=assets-2-instance-1.c52ac2emar8b.us-east-1.rds.amazonaws.com --port=5432 --dbname=postgres --username=akmn2 -c "SELECT * FROM reports.cloud_formation_templates"
       - echo "Running deploy..."
