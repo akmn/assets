@@ -6,11 +6,13 @@ env:
 phases:
   build:
     commands:
+      # Need to use EC2-based CodeBuild instead of lambda, since Lambda CodeBuild doesn't support VPC's, which we need for DB access
+      # Install Go since EC2-based CodeBuild Docker images don't have it
       - echo "Installing Go..."
       # Make sure goenv is up to date
       - cd $HOME/.goenv && git pull --ff-only && cd -
-      # Install Go 1.17
       - goenv install 1.21.7
       - goenv global 1.21.7
-      - echo "Running build..."
+      - echo "Connect to DB..."
+      - psql --host=endpoint --port=5432 --dbname=postgres --username=akmn
       - echo "Running deploy..."
