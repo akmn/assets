@@ -1,0 +1,70 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Resource": [
+				"arn:aws:logs:us-east-1:992382528358:log-group:/aws/codebuild/assets",
+				"arn:aws:logs:us-east-1:992382528358:log-group:/aws/codebuild/assets:*"
+			],
+			"Action": [
+				"logs:CreateLogGroup",
+				"logs:CreateLogStream",
+				"logs:PutLogEvents"
+			]
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+				"codebuild:CreateReportGroup",
+				"codebuild:CreateReport",
+				"codebuild:UpdateReport",
+				"codebuild:BatchPutTestCases",
+				"codebuild:BatchPutCodeCoverages"
+			],
+			"Resource": [
+				"arn:aws:codebuild:us-east-1:992382528358:report-group/assets-*"
+			]
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+				"ec2:CreateNetworkInterface",
+				"ec2:DescribeDhcpOptions",
+				"ec2:DescribeNetworkInterfaces",
+				"ec2:DeleteNetworkInterface",
+				"ec2:DescribeSubnets",
+				"ec2:DescribeSecurityGroups",
+				"ec2:DescribeVpcs"
+			],
+			"Resource": "*"
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+				"ec2:CreateNetworkInterfacePermission"
+			],
+			"Resource": "arn:aws:ec2:us-east-1:992382528358:network-interface/*",
+			"Condition": {
+				"StringEquals": {
+					"ec2:AuthorizedService": "codebuild.amazonaws.com"
+				},
+				"ArnEquals": {
+					"ec2:Subnet": [
+						"arn:aws:ec2:us-east-1:992382528358:subnet/subnet-0d65df4d3d1692ec3",
+						"arn:aws:ec2:us-east-1:992382528358:subnet/subnet-0fb9e5613781af6e9"
+					]
+				}
+			}
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+				"secretsmanager:GetSecretValue"
+			],
+			"Resource": [
+				"arn:aws:secretsmanager:us-east-1:992382528358:secret:rds!cluster-adc64676-287a-4c8b-8936-1d7b03978209-t0TdFi"
+			]
+		}
+	]
+}
