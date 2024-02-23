@@ -13,7 +13,7 @@ phases:
       - cd $HOME/.goenv && git pull --ff-only && cd -
       - goenv install 1.21.7
       - goenv global 1.21.7
-      - sudo amazon-linux-extras install postgresql15
+      - sudo dnf install postgresql15.x86_64
       - echo "Connect to DB..."
       - psql --host=endpoint --port=5432 --dbname=postgres --username=akmn
       - echo "Running deploy..."
