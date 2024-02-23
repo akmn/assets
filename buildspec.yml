@@ -11,13 +11,14 @@ phases:
     commands:
       # Need to use EC2-based CodeBuild instead of lambda, since Lambda CodeBuild doesn't support VPC's, which we need for DB access
       # Install Go since EC2-based CodeBuild Docker images don't have it
-      - echo "Installing Postgres Client..."
-      - sudo dnf -y install postgresql15.x86_64
       - echo "Installing Go..."
       - cd $HOME/.goenv && git pull --ff-only && cd -
       - goenv install 1.21.7
       - goenv global 1.21.7
-      - echo "Connect to DB..."
+      # Install Postgres client
+      - echo "Installing Postgres Client..."
+      - sudo dnf -y install postgresql15.x86_64
+      - echo "Connect to DB and run query..."
       - export PGPASSWORD=$DB_PASSWORD
       - psql --host=$DB_HOST --port=$DB_PORT --dbname=$DB_NAME --username="$DB_USERNAME" -c "SELECT * FROM reports.cloud_formation_templates"
-      - echo "Running deploy..."
+      - echo "Done!"
